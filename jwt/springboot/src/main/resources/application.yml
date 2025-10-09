@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: jwt-test
+  datasource:
+    url: jdbc:postgresql://localhost:5445/jwt
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  liquibase:
+    contexts: dev
+    change-log: classpath:db/changelog/master.xml
+    enabled: true
+server:
+  port: 8080
