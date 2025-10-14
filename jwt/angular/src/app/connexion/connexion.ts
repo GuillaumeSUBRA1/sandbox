@@ -9,6 +9,10 @@ import { IconsModule } from '../icons/icons-module';
   styleUrl: './connexion.css'
 })
 export class Connexion {
+  sites = [
+    { name: 'linkedin', link: 'https://www.linkedin.com/in/guillaume-subra-622689139/' },
+    { name: 'github', link: 'https://github.com/GuillaumeSUBRA1' },
+  ];
 
   router = inject(Router);
 

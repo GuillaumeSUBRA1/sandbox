@@ -79,15 +79,11 @@
     </div>
 
     <div class="mt-8 flex justify-center space-x-4">
-      <button class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition">
-        <i data-feather="github" class="w-5 h-5"></i>
+      @for (s of sites; track $index) {
+      <button class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 hover:cursor-pointer transition">
+        <i-feather name="{{ s.name }}" class="w-5 h-5"></i-feather>
       </button>
-      <button class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition">
-        <i data-feather="twitter" class="w-5 h-5"></i>
-      </button>
-      <button class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition">
-        <i data-feather="facebook" class="w-5 h-5"></i>
-      </button>
+      }
     </div>
   </div>
 </div>
