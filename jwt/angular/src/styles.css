@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+.auth-card {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.input-field {
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+.input-field:focus {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+.gradient-text {
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.password-strength {
+  height: 4px;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}

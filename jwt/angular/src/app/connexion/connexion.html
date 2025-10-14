@@ -1,0 +1,93 @@
+<div class="container mx-auto px-4">
+  <div class="max-w-md mx-auto auth-card rounded-2xl p-8 shadow-2xl">
+    <div class="text-center mb-10">
+      <h1 class="text-4xl font-bold mb-2 gradient-text">AuthNova</h1>
+      <p class="text-gray-300">Votre portail d'authentification nouvelle génération</p>
+    </div>
+
+    <form id="loginForm" class="space-y-6">
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i-feather name="mail" class="text-gray-400"></i-feather>
+          </div>
+          <input
+            type="email"
+            id="email"
+            required
+            class="input-field pl-10 w-full px-4 py-3 rounded-lg focus:outline-none text-white"
+            placeholder="votre@email.com"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-300 mb-1"
+          >Mot de passe</label
+        >
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i-feather name="lock" class="text-gray-400"></i-feather>
+          </div>
+          <input
+            type="password"
+            id="password"
+            required
+            class="input-field pl-10 w-full px-4 py-3 rounded-lg focus:outline-none text-white"
+            placeholder="••••••••"
+          />
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <input
+            id="remember"
+            type="checkbox"
+            class="h-4 w-4 rounded bg-gray-700 border-gray-600"
+          />
+          <label for="remember" class="ml-2 block text-sm text-gray-300">Se souvenir de moi</label>
+        </div>
+        <a href="#" class="text-sm text-indigo-400 hover:text-indigo-300">Mot de passe oublié ?</a>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white py-3 px-4 rounded-lg font-medium transition duration-300 shadow-lg hover:shadow-xl"
+      >
+        Se connecter
+      </button>
+    </form>
+
+    <div class="mt-6">
+      <div class="relative">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-gray-700"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="px-2 bg-gray-800 text-gray-400">Nouveau chez nous ?</span>
+        </div>
+      </div>
+
+      <div
+        class="mt-6 w-full block border border-indigo-600 text-indigo-400 hover:cursor-pointer hover:bg-indigo-900/20 hover:border-indigo-500 hover:text-indigo-300 py-3 px-4 rounded-lg font-medium text-center transition duration-300"
+        (click)="toInscription()"
+      >
+        Créer un compte
+      </div>
+    </div>
+
+    <div class="mt-8 flex justify-center space-x-4">
+      <button class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition">
+        <i data-feather="github" class="w-5 h-5"></i>
+      </button>
+      <button class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition">
+        <i data-feather="twitter" class="w-5 h-5"></i>
+      </button>
+      <button class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition">
+        <i data-feather="facebook" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </div>
+</div>
