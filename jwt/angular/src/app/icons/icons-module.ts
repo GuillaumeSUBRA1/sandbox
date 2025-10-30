@@ -1,14 +1,30 @@
 import { NgModule } from '@angular/core';
 
 import { FeatherModule } from 'angular-feather';
-import { Github, Mail, Linkedin, Lock, User } from 'angular-feather/icons';
+import {
+  Github,
+  Mail,
+  Linkedin,
+  Lock,
+  User,
+  ChevronRight,
+  Activity,
+  Settings,
+  LogOut,
+  LogIn,
+} from 'angular-feather/icons';
 
 const icons = {
   Mail,
   Github,
   Linkedin,
   Lock,
-  User
+  User,
+  ChevronRight,
+  Activity,
+  Settings,
+  LogOut,
+  LogIn,
 };
 
 @NgModule({
