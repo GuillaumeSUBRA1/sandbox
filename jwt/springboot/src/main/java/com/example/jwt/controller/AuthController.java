@@ -1,18 +1,15 @@
 package com.example.jwt.controller;
 
-import com.example.jwt.dto.UserDTO;
+import com.example.jwt.dto.ConnectedUserDTO;
 import com.example.jwt.dto.UserRecord;
 import com.example.jwt.entity.UserEntity;
+import com.example.jwt.mapper.UserMapper;
+import com.example.jwt.repository.UserRepository;
 import com.example.jwt.service.JwtService;
 import com.example.jwt.service.UserService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,32 +18,40 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
 
+    @Autowired
     JwtService jwtService;
+    @Autowired
     UserService userService;
-    AuthenticationManager authenticationManager;
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    UserMapper userMapper;
 
     // ✅ Création de compte
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRecord user) {
+    public ResponseEntity<ConnectedUserDTO> register(@RequestBody UserRecord user) {
         UserEntity userCreated = userService.createUser(user);
         String token = jwtService.generateToken(userCreated);
-        return ResponseEntity.ok(token);
+        ConnectedUserDTO connectedUserDTO = userMapper.entityToConnectedDTO(userCreated);
+        connectedUserDTO.setToken(token);
+        return ResponseEntity.ok(connectedUserDTO);
     }
 
     // 🔐 Connexion
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserRecord user) {
-        UserDTO userDTO = userService.findByEmailAndPassword(user.email(), user.password());
-        if(userDTO == null) {
-            return ResponseEntity.status(401).body("Nom d'utilisateur ou mot de passe incorrect");
+    public ResponseEntity<ConnectedUserDTO> login(@RequestBody UserRecord user) throws Exception {
+        UserEntity userEntity = userService.findByEmailAndPassword(user.email(), user.password());
+        if(userEntity == null) {
+            throw new Exception("Nom d'utilisateur ou mot de passe incorrect");
         }
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.username(), user.password())
-        );
+        String token = jwtService.generateToken(userEntity);
+        ConnectedUserDTO connectedUserDTO = userMapper.entityToConnectedDTO(userEntity);
+        connectedUserDTO.setToken(token);
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String token = jwtService.generateToken(userDetails);
+        return ResponseEntity.ok(connectedUserDTO);
+    }
 
         return ResponseEntity.ok(token);
     }

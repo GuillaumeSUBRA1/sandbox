@@ -1,7 +1,7 @@
 package com.example.jwt.service;
 
+import com.example.jwt.entity.UserEntity;
 import io.jsonwebtoken.Claims;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -21,9 +21,9 @@ public class JwtService {
     private static final String SECRET_KEY = "TestDeJWTTokenOnSimpleLoginAndRegisterProject";
     private final int day = 86400000;
 
-    public String generateToken(UserDetails user) {
+    public String generateToken(UserEntity user) {
         return Jwts.builder()
-                .subject(user.getUsername())
+                .subject(user.getEmail())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + day))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
