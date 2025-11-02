@@ -1,26 +1,28 @@
 package com.example.jwt.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-@Table(name = "user")
 @Entity
+@Table(name = "\"user\"")
 public class UserEntity implements UserDetails {
     @Id
-    @GeneratedValue
+    @Getter
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userGenerator")
+    @SequenceGenerator(name = "userGenerator", sequenceName = "user_generator", allocationSize = 1)
+    @Column(name = "id")
     Long id;
-
-    String username;
 
     @Getter
     String email;
+
+    @Getter
+    @Setter
+    String name;
 
     String password;
 
@@ -36,11 +38,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+        return null;
     }
 
     public void setPassword(String password) {
