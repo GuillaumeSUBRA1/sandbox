@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
   selector: 'inscription',
   imports: [IconsModule, CommonModule],
   templateUrl: './inscription.html',
-  styleUrl: './inscription.css',
 })
 export class Inscription {
   @ViewChild('strength1') strength1!: ElementRef;

@@ -6,7 +6,6 @@ import { IconsModule } from '../icons/icons-module';
   selector: 'connexion',
   imports: [IconsModule],
   templateUrl: './connexion.html',
-  styleUrl: './connexion.css'
 })
 export class Connexion {
   sites = [
