@@ -46,15 +46,15 @@ export class Inscription {
     }
   }
 
-  hasMaj(s: string){
+  hasMaj(s: string) {
     return /[A-Z]/.test(s);
   }
 
-  hasMin(s: string){
+  hasMin(s: string) {
     return /[a-z]/.test(s);
   }
 
-  hasNumber(s: string){
+  hasNumber(s: string) {
     return /[0-9]/.test(s);
   }
 

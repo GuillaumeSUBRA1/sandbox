@@ -15,7 +15,7 @@ export class Connexion {
 
   router = inject(Router);
 
-  toInscription(){
+  toInscription() {
     this.router.navigate(['inscription']);
   }
 }
