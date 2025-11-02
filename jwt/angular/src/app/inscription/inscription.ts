@@ -59,7 +59,7 @@ export class Inscription {
   }
 
 
-  toConnexion(){
-    this.router.navigate(['']);
+  toConnexion() {
+    this.router.navigate(['connexion']);
   }
 }

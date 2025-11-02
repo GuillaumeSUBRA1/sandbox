@@ -1,14 +1,21 @@
 import { Routes } from '@angular/router';
 import { Connexion } from './connexion/connexion';
 import { Inscription } from './inscription/inscription';
+import { Dashboard } from './dashboard/dashboard';
 
 export const routes: Routes = [
-    {
-      path: "",
-      component: Connexion
-    },
-    {
-      path: "inscription",
-      component: Inscription
-    }
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  {
+    path: 'dashboard',
+    component: Dashboard,
+  },
+
+  {
+    path: 'inscription',
+    component: Inscription,
+  },
+  {
+    path: 'connexion',
+    component: Connexion,
+  },
 ];
