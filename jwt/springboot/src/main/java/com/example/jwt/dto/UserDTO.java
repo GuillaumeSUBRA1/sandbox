@@ -1,8 +1,10 @@
 package com.example.jwt.dto;
 
+import lombok.Data;
+
+@Data
 public class UserDTO {
     Long id;
-    String username;
-    String password;
     String email;
+    String password;
 }
