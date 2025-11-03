@@ -17,11 +17,11 @@ export class Connexion {
   ];
 
   connectUserForm = this.formBuilder.nonNullable.group<ConnectUserForm>({
-    email: new FormControl('guillaumesubra1@gmail.com', {
+    email: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    password: new FormControl('Password1!', {
+    password: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required],
     }),

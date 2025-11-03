@@ -20,23 +20,23 @@ export class Inscription {
   formBuilder = inject(FormBuilder);
   router = inject(Router);
   newUserForm = this.formBuilder.nonNullable.group<CreateUserForm>({
-    name: new FormControl('SUBRA Guillaume', {
+    name: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    email: new FormControl('guillaumesubra1@gmail.com', {
+    email: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.email],
     }),
-    password: new FormControl('Password1!', {
+    password: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    confirmPassword: new FormControl('Password1!', {
+    confirmPassword: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    accept: new FormControl(true, { nonNullable: true, validators: [Validators.required] }),
+    accept: new FormControl(false, { nonNullable: true, validators: [Validators.required] }),
   });
 
   testPassword(event: Event) {
