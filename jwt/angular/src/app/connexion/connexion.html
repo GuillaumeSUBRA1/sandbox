@@ -5,9 +5,9 @@
       <p class="text-gray-300">Votre portail d'authentification nouvelle génération</p>
     </div>
 
-    <form id="loginForm" class="space-y-6">
+    <form id="loginForm" [formGroup]="connectUserForm" class="space-y-6">
       <div>
-        <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+        <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Login</label>
         <div class="relative">
           <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <i-feather name="mail" class="text-gray-400"></i-feather>
@@ -16,8 +16,9 @@
             type="email"
             id="email"
             required
-            class="input-field pl-10 w-full px-4 py-3 rounded-lg focus:outline-none text-white"
-            placeholder="votre@email.com"
+            formControlName="email"
+            class="placeholder-gray-400 ext-gray-400 input-field pl-12 w-full px-4 py-3 rounded-lg focus:outline-none text-white"
+            placeholder="Nom ou email"
           />
         </div>
       </div>
@@ -34,7 +35,8 @@
             type="password"
             id="password"
             required
-            class="input-field pl-10 w-full px-4 py-3 rounded-lg focus:outline-none text-white"
+            formControlName="password"
+            class="placeholder-gray-400 text-gray-400 input-field pl-12 w-full px-4 py-3 rounded-lg focus:outline-none text-white"
             placeholder="••••••••"
           />
         </div>
@@ -53,7 +55,7 @@
       </div>
 
       <button
-        type="submit"
+        (click)="connexion()"
         class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white py-3 px-4 rounded-lg font-medium transition duration-300 shadow-lg hover:shadow-xl"
       >
         Se connecter
@@ -80,7 +82,9 @@
 
     <div class="mt-8 flex justify-center space-x-4">
       @for (s of sites; track $index) {
-      <button class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 hover:cursor-pointer transition">
+      <button
+        class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 hover:cursor-pointer transition"
+      >
         <i-feather name="{{ s.name }}" class="w-5 h-5"></i-feather>
       </button>
       }
