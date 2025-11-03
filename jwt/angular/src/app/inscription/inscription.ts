@@ -1,11 +1,13 @@
-import { Component, ElementRef, inject,  ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { IconsModule } from '../icons/icons-module';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CreateUserForm } from '../model/user.model';
 
 @Component({
   selector: 'inscription',
-  imports: [IconsModule, CommonModule],
+  imports: [IconsModule, ReactiveFormsModule],
   templateUrl: './inscription.html',
 })
 export class Inscription {
@@ -15,7 +17,27 @@ export class Inscription {
   @ViewChild('strength4') strength4!: ElementRef;
   @ViewChild('regPassword') regPassword!: ElementRef;
 
+  formBuilder = inject(FormBuilder);
   router = inject(Router);
+  newUserForm = this.formBuilder.nonNullable.group<CreateUserForm>({
+    name: new FormControl('SUBRA Guillaume', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    email: new FormControl('guillaumesubra1@gmail.com', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email],
+    }),
+    password: new FormControl('Password1!', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    confirmPassword: new FormControl('Password1!', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    accept: new FormControl(true, { nonNullable: true, validators: [Validators.required] }),
+  });
 
   testPassword(event: Event) {
     const pwd = (event.target as HTMLInputElement).value;
