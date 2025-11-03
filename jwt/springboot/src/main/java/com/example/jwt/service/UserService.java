@@ -56,5 +56,7 @@ public class UserService {
         }
         return userMapper.entityToDTO(userEntity.get());
 
+    public boolean matchPassword(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 }
