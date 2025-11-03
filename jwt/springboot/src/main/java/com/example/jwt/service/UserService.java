@@ -20,6 +20,7 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
     UserMapper userMapper;
 
     // ✅ Création d’un nouvel utilisateur
@@ -39,9 +40,7 @@ public class UserService {
             throw new RuntimeException("Le nom doit contenir au moins 3 caractères");
         }
 
-        UserEntity userEntity = new UserEntity();
-        userEntity.setUsername(user.username());
-        userEntity.setEmail(user.email());
+        UserEntity userEntity = userMapper.recordToEntity(user);
         userEntity.setPassword(passwordEncoder.encode(user.password()));
 
         return userRepository.save(userEntity);
