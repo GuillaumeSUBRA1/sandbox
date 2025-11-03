@@ -21,9 +21,10 @@ public class JwtService {
     private static final String SECRET_KEY = "TestDeJWTTokenOnSimpleLoginAndRegisterProject";
     private final int day = 86400000;
 
-    public String generateToken(UserEntity user) {
+    public String generateToken(String email, String password) {
         return Jwts.builder()
-                .subject(user.getEmail())
+                .subject(email)
+                .claim("password", password)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + day))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
@@ -42,11 +43,11 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
 
-        String username = claims.getSubject();
+        String email = claims.getSubject();
         String password = claims.get("password", String.class);
 
         Map<String, String> credentials = new HashMap<>();
-        credentials.put("username", username);
+        credentials.put("email", email);
         credentials.put("password", password);
         return credentials;
     }

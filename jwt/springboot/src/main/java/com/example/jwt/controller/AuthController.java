@@ -32,7 +32,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<ConnectedUserDTO> register(@RequestBody UserRecord user) {
         UserEntity userCreated = userService.createUser(user);
-        String token = jwtService.generateToken(userCreated);
+        String token = jwtService.generateToken(userCreated.getEmail(),user.password());
         ConnectedUserDTO connectedUserDTO = userMapper.entityToConnectedDTO(userCreated);
         connectedUserDTO.setToken(token);
         return ResponseEntity.ok(connectedUserDTO);
@@ -40,13 +40,13 @@ public class AuthController {
 
     // 🔐 Connexion
     @PostMapping("/login")
-    public ResponseEntity<ConnectedUserDTO> login(@RequestBody UserRecord user) throws Exception {
+    public ResponseEntity<ConnectedUserDTO> login(@RequestBody ConnectUserRecord user) {
         UserEntity userEntity = userService.findByEmailAndPassword(user.email(), user.password());
         if(userEntity == null) {
             throw new Exception("Nom d'utilisateur ou mot de passe incorrect");
         }
 
-        String token = jwtService.generateToken(userEntity);
+        String token = jwtService.generateToken(userEntity.getEmail(), user.password());
         ConnectedUserDTO connectedUserDTO = userMapper.entityToConnectedDTO(userEntity);
         connectedUserDTO.setToken(token);
 
