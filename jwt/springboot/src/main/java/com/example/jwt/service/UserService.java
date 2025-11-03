@@ -29,6 +29,15 @@ public class UserService {
         if (userRepository.existsByEmail(user.email())) {
             throw new RuntimeException("Nom d'utilisateur déjà utilisé");
         }
+        if(user.password().length() < 8) {
+            throw new RuntimeException("Le mot de passe doit contenir au moins 8 caractères");
+        }
+        if (user.email().length() < 3) {
+            throw new RuntimeException("Le login doit contenir au moins 3 caractères");
+        }
+        if (user.name().length() < 3) {
+            throw new RuntimeException("Le nom doit contenir au moins 3 caractères");
+        }
 
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(user.username());
