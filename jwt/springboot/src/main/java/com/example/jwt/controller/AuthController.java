@@ -42,9 +42,6 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<ConnectedUserDTO> login(@RequestBody ConnectUserRecord user) {
         UserEntity userEntity = userService.findByEmailAndPassword(user.email(), user.password());
-        if(userEntity == null) {
-            throw new Exception("Nom d'utilisateur ou mot de passe incorrect");
-        }
 
         String token = jwtService.generateToken(userEntity.getEmail(), user.password());
         ConnectedUserDTO connectedUserDTO = userMapper.entityToConnectedDTO(userEntity);
