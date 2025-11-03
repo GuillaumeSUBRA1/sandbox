@@ -5,6 +5,7 @@ import com.example.jwt.dto.UserRecord;
 import com.example.jwt.entity.UserEntity;
 import com.example.jwt.mapper.UserMapper;
 import com.example.jwt.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +23,7 @@ public class UserService {
     UserMapper userMapper;
 
     // ✅ Création d’un nouvel utilisateur
+    @Transactional
     public UserEntity createUser(UserRecord user) {
 
         if (userRepository.existsByEmail(user.email())) {
