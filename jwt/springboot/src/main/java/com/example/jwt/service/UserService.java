@@ -40,6 +40,7 @@ public class UserService {
     public UserDTO findByEmailAndPassword(String email, String password) throws UsernameNotFoundException {
         Optional<UserEntity> userEntity = userRepository.findByEmailAndPassword(email, passwordEncoder.encode(password));
         if(userEntity.isEmpty()) {
+        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
             throw new UsernameNotFoundException("Utilisateur non trouvé");
         }
         return userMapper.entityToDTO(userEntity.get());
