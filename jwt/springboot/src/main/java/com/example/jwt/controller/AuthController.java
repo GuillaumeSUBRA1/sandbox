@@ -1,8 +1,12 @@
 package com.example.jwt.controller;
 
+import com.example.jwt.dto.ConnectUserRecord;
 import com.example.jwt.dto.ConnectedUserDTO;
 import com.example.jwt.dto.UserRecord;
 import com.example.jwt.entity.UserEntity;
+import com.example.jwt.exception.advice.exception.PasswordException;
+import com.example.jwt.exception.advice.exception.TokenException;
+import com.example.jwt.exception.advice.exception.UserNotFoundException;
 import com.example.jwt.mapper.UserMapper;
 import com.example.jwt.repository.UserRepository;
 import com.example.jwt.service.JwtService;
@@ -12,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping("/auth")
