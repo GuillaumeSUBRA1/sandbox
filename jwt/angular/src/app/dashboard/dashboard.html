@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <body class="min-h-screen bg-gray-900 text-white" id="vanta-bg">
+    <div class="container mx-auto px-4 py-8">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold gradient-text">AuthNova</h1>
+        @if(userConnected){
+        <div class="flex items-center space-x-4">
+          <button
+            class="flex items-center space-x-2 bg-red-600 hover:bg-red-700 hover:cursor-pointer px-4 py-2 rounded-lg transition duration-300"
+            (click)="logout()"
+          >
+            <i-feather name="log-out"></i-feather>
+            <span>Déconnexion</span>
+          </button>
+          <div
+            class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white text-lg font-semibold shadow-md"
+          >
+            {{ letter }}
+          </div>
+        </div>
+        }@else{
+        <div class="flex flex-row items-start space-x-4">
+          <button
+            class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 hover:cursor-pointer px-4 py-2 rounded-lg transition duration-300"
+            (click)="login()"
+          >
+            <span>Connexion</span>
+          </button>
+          <button
+            class="flex items-center space-x-2 bg-green-600 hover:bg-green-700 hover:cursor-pointer px-4 py-2 rounded-lg transition duration-300"
+            (click)="register()"
+          >
+            <span>Inscription</span>
+          </button>
+        </div>
+        }
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (c of cards; track $index) {
+        <div class="dashboard-card p-6 rounded-xl">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="p-3 rounded-lg {{ c.bgColor }}">
+              <i-feather name="user" class="w-6 h-6"></i-feather>
+            </div>
+            <h2 class="text-xl font-semibold {{ c.textColor }}">{{ c.title }}</h2>
+          </div>
+          <p class="text-gray-300">
+            {{ c.description }}
+          </p>
+        </div>
+        }
+      </div>
+
+      @if (userConnected) {
+      <div class="mt-4 mb-6 p-6 bg-gray-800 border border-gray-700 rounded-xl shadow-lg text-center">
+        <h2 class="text-2xl font-semibold text-white mb-2">Bienvenue, {{ user?.name }} !</h2>
+        <p class="text-gray-400 text-base">
+          Ravi de vous revoir sur <span class="text-blue-400 font-medium">AuthNova</span> 👋
+        </p>
+      </div>
+      }
+    </div>
+  </body>
+</html>
