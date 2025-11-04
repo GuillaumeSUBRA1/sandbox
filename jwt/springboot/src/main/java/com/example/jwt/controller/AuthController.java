@@ -50,6 +50,33 @@ public class AuthController {
         return ResponseEntity.ok(connectedUserDTO);
     }
 
-        return ResponseEntity.ok(token);
+    // 🔐 Récupération de compte
+    @GetMapping("/get-user")
+    public ResponseEntity<ConnectedUserDTO> getUser(@RequestHeader("Authorization") String header) throws Exception {
+        if (!header.startsWith("Bearer ")) {
+            throw new TokenException("Token manquant");
+        }
+        String token = header.substring(7);
+        Map<String, String> credentials = JwtService.extractCredentials(token);
+        UserEntity userEntity = userRepository.findByEmail(credentials.get("email")).orElse(null);
+        if(userEntity == null) {
+            throw new UserNotFoundException("Aucun utilisateur trouvé");
+        }
+        if(!userService.matchPassword(credentials.get("password"), userEntity.getPassword())) {
+            throw new PasswordException("Le mot de passe est incorrect");
+        }
+
+        ConnectedUserDTO connectedUserDTO = userMapper.entityToConnectedDTO(userEntity);
+        return ResponseEntity.ok(connectedUserDTO);
+    }
+
+    @GetMapping("/is-authenticated/{token}")
+    public ResponseEntity<Boolean> isAuthenticated(@RequestParam String token) throws Exception {
+        Map<String, String> credentials = JwtService.extractCredentials(token);
+        UserEntity userEntity = userService.findByEmailAndPassword(credentials.get("email"), credentials.get("password"));
+        if(userEntity == null) {
+            throw new UserNotFoundException("Aucun utilisateur trouvé");
+        }
+        return ResponseEntity.ok(true);
     }
 }
