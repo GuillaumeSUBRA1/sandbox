@@ -1,8 +1,10 @@
 package com.example.jwt.service;
 
-import com.example.jwt.dto.UserDTO;
 import com.example.jwt.dto.UserRecord;
 import com.example.jwt.entity.UserEntity;
+import com.example.jwt.exception.advice.exception.PasswordException;
+import com.example.jwt.exception.advice.exception.UserException;
+import com.example.jwt.exception.advice.exception.UserNotFoundException;
 import com.example.jwt.mapper.UserMapper;
 import com.example.jwt.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -44,9 +46,8 @@ public class UserService {
     }
 
     // 🔍 Chargement d’un utilisateur pour Spring Security
-    public UserDTO findByEmailAndPassword(String email, String password) throws UsernameNotFoundException {
-        Optional<UserEntity> userEntity = userRepository.findByEmailAndPassword(email, passwordEncoder.encode(password));
-        if(userEntity.isEmpty()) {
+    @Transactional
+    public UserEntity findByEmailAndPassword(String email, String password) throws UsernameNotFoundException {
         Optional<UserEntity> userEntity = userRepository.findByEmail(email);
         if(userEntity.isEmpty()) {
             throw new UserNotFoundException("Aucun utilisateur trouvé");
@@ -54,7 +55,8 @@ public class UserService {
         if(!passwordEncoder.matches(password, userEntity.get().getPassword())) {
             throw new PasswordException("Le mot de passe est incorrect");
         }
-        return userMapper.entityToDTO(userEntity.get());
+        return userEntity.get();
+    }
 
     public boolean matchPassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
