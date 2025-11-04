@@ -28,16 +28,13 @@ public class UserService {
     public UserEntity createUser(UserRecord user) {
 
         if (userRepository.existsByEmail(user.email())) {
-            throw new RuntimeException("Nom d'utilisateur déjà utilisé");
+            throw new UserException("Nom d'utilisateur déjà utilisé");
         }
         if(user.password().length() < 8) {
-            throw new RuntimeException("Le mot de passe doit contenir au moins 8 caractères");
+            throw new PasswordException("Le mot de passe doit contenir au moins 8 caractères");
         }
         if (user.email().length() < 3) {
-            throw new RuntimeException("Le login doit contenir au moins 3 caractères");
-        }
-        if (user.name().length() < 3) {
-            throw new RuntimeException("Le nom doit contenir au moins 3 caractères");
+            throw new PasswordException("Le login doit contenir au moins 3 caractères");
         }
 
         UserEntity userEntity = userMapper.recordToEntity(user);
@@ -51,7 +48,11 @@ public class UserService {
         Optional<UserEntity> userEntity = userRepository.findByEmailAndPassword(email, passwordEncoder.encode(password));
         if(userEntity.isEmpty()) {
         Optional<UserEntity> userEntity = userRepository.findByEmail(email);
-            throw new UsernameNotFoundException("Utilisateur non trouvé");
+        if(userEntity.isEmpty()) {
+            throw new UserNotFoundException("Aucun utilisateur trouvé");
+        }
+        if(!passwordEncoder.matches(password, userEntity.get().getPassword())) {
+            throw new PasswordException("Le mot de passe est incorrect");
         }
         return userMapper.entityToDTO(userEntity.get());
 
