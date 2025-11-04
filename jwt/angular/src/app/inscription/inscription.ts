@@ -1,7 +1,7 @@
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { IconsModule } from '../icons/icons-module';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth-service.service';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CreateUserForm } from '../model/user.model';
 
@@ -19,6 +19,8 @@ export class Inscription {
 
   formBuilder = inject(FormBuilder);
   router = inject(Router);
+  authService = inject(AuthService);
+
   newUserForm = this.formBuilder.nonNullable.group<CreateUserForm>({
     name: new FormControl('', {
       nonNullable: true,
@@ -80,6 +82,21 @@ export class Inscription {
     return /[0-9]/.test(s);
   }
 
+  samePassword(): boolean {
+    return this.newUserForm.value.password == this.newUserForm.value.confirmPassword;
+  }
+
+  register() {
+    if (this.newUserForm.valid && this.samePassword()) {
+      this.authService
+        .createUser({
+          email: this.newUserForm.value.email!,
+          name: this.newUserForm.value.name!,
+          password: this.newUserForm.value.password!,
+        })
+        .subscribe(() => this.router.navigate(['dashboard']));
+    }
+  }
 
   toConnexion() {
     this.router.navigate(['connexion']);
