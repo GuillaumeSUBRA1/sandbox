@@ -38,7 +38,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<ConnectedUserDTO> register(@RequestBody UserRecord user) {
         UserEntity userCreated = userService.createUser(user);
-        String token = jwtService.generateToken(userCreated.getEmail(),user.password());
+        String token = jwtService.generateToken(userCreated.getEmail(), user.password());
         ConnectedUserDTO connectedUserDTO = userMapper.entityToConnectedDTO(userCreated);
         connectedUserDTO.setToken(token);
         return ResponseEntity.ok(connectedUserDTO);
@@ -65,10 +65,10 @@ public class AuthController {
         String token = header.substring(7);
         Map<String, String> credentials = JwtService.extractCredentials(token);
         UserEntity userEntity = userRepository.findByEmail(credentials.get("email")).orElse(null);
-        if(userEntity == null) {
+        if (userEntity == null) {
             throw new UserNotFoundException("Aucun utilisateur trouvé");
         }
-        if(!userService.matchPassword(credentials.get("password"), userEntity.getPassword())) {
+        if (!userService.matchPassword(credentials.get("password"), userEntity.getPassword())) {
             throw new PasswordException("Le mot de passe est incorrect");
         }
 
@@ -79,8 +79,9 @@ public class AuthController {
     @GetMapping("/is-authenticated/{token}")
     public ResponseEntity<Boolean> isAuthenticated(@RequestParam String token) throws Exception {
         Map<String, String> credentials = JwtService.extractCredentials(token);
-        UserEntity userEntity = userService.findByEmailAndPassword(credentials.get("email"), credentials.get("password"));
-        if(userEntity == null) {
+        UserEntity userEntity = userService.findByEmailAndPassword(credentials.get("email"),
+                credentials.get("password"));
+        if (userEntity == null) {
             throw new UserNotFoundException("Aucun utilisateur trouvé");
         }
         return ResponseEntity.ok(true);
