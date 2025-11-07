@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, WritableSignal, computed, inject, signal } from '@angular/core';
 import { ConnectedUser, ConnectUser, CreateUser } from '../app/model/user.model';
-import { environment } from '../environments/environment.development';
+import { environment } from '../environments/environment.prod';
 import { catchError, EMPTY, Observable, tap } from 'rxjs';
 
 @Injectable({

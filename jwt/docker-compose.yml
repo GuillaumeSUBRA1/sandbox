@@ -6,10 +6,12 @@ services:
       POSTGRES_DB: jwt
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    depends_on:
-      - database
     ports:
       - "8080:8080"
+    depends_on:
+      - database
+    restart:
+      unless-stopped
     networks:
       - app-network
 
@@ -18,12 +20,12 @@ services:
     build: ./angular
     ports:
       - "4200:80"
+    depends_on:
+      - backend
+    restart:
+      unless-stopped
     networks:
       - app-network
-    depends_on:
-      - database
-    restart:
-      on-failure
 
   database:
     image: postgres
